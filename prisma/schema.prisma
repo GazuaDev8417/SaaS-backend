@@ -9,10 +9,10 @@ datasource db {
 
 model User {
   id              Int      @id @default(autoincrement())
-  name            String
-  email           String   @unique
-  password        String
-  role            String   @default("Admin")
+  name            String   @db.VarChar(50)
+  email           String   @unique @db.VarChar(255)
+  password        String   @db.VarChar(255)
+  role            String   @default("Admin") @db.VarChar(20)
   emailNotifs     Boolean  @default(true)
   pushNotifs      Boolean  @default(false)
   marketingEmails Boolean  @default(false)
@@ -22,52 +22,52 @@ model User {
 
 model Product {
   id        Int      @id @default(autoincrement())
-  name      String
-  category  String
+  name      String   @db.VarChar(50)
+  category  String   @db.VarChar(30)
   price     Float
   stock     Int
-  status    String
+  status    String   @db.VarChar(20)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Customer {
   id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  phone     String
-  status    String
-  orders    Order[]
+  name      String   @db.VarChar(50)
+  email     String   @unique @db.VarChar(255)
+  phone     String   @db.VarChar(20)
+  status    String   @db.VarChar(15)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  orders    Order[]
 }
 
 model Order {
-  id            Int      @id @default(autoincrement())
-  product       String
-  total         Float
-  status        String
-  customer      Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  customerId    Int
-  customerName  String
-  createdAt     DateTime @default(now())
+  id           Int      @id @default(autoincrement())
+  product      String   @db.VarChar(30)
+  total        Float
+  status       String   @db.VarChar(20)
+  customerId   Int
+  customerName String   @db.VarChar(50)
+  createdAt    DateTime @default(now())
+  customer     Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
 }
 
 model Revenue {
-  id        Int      @id @default(autoincrement())
-  month     String   
-  revenue   Int   
-  orders    Int
+  id      Int    @id @default(autoincrement())
+  month   String @db.VarChar(20)
+  revenue Int
+  orders  Int
 }
 
 model Category {
-  id        Int      @id @default(autoincrement())
-  name      String   
-  value     Int
+  id    Int    @id @default(autoincrement())
+  name  String @db.VarChar(20)
+  value Int
 }
 
 model Statistics {
-  id        Int      @id @default(autoincrement())
-  title     String   
-  value     Int
+  id    Int    @id @default(autoincrement())
+  title String
+  value Int
 }
