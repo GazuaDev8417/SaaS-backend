@@ -14,12 +14,11 @@ const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret'
 
 router.post('/login', async(req, res)=>{
     const { email, password } = req.body
-
     const user = await prisma.user.findUnique({ where: { email } })
     if(!user){
         return res.status(400).json({ message: 'Invalid credentials' })
     }
-
+    
     const isValidPassword = await bcrypt.compare(password.trim(), user.password)
     if(!isValidPassword){
         return res.status(400).json({ message: 'Invalid credentials' })
@@ -41,9 +40,9 @@ router.post('/login', async(req, res)=>{
     })
 })
 
-router.use(authenticateToken)
 
-router.get('/me', async(req:AuthRequest, res)=>{
+
+router.get('/me', authenticateToken, async(req:AuthRequest, res)=>{
     if(!req.userId) return res.status(401).json({ message: 'Unauthorized' })
 
     const user = await prisma.user.findUnique({
@@ -64,7 +63,7 @@ router.get('/me', async(req:AuthRequest, res)=>{
 })
 
 
-router.put('/profile', async(req:AuthRequest, res)=>{
+router.put('/profile', authenticateToken, async(req:AuthRequest, res)=>{
     if(!req.userId) return res.status(401).json({ message: 'Unauthoized'} )
 
     const { name, email, role } = req.body
@@ -94,7 +93,7 @@ router.put('/profile', async(req:AuthRequest, res)=>{
 })
 
 
-router.put('/password', async(req:AuthRequest, res)=>{
+router.put('/password', authenticateToken, async(req:AuthRequest, res)=>{
     if(!req.userId) return res.status(401).json({ message: 'Unauthorized' })
 
     const { currentPassword, newPassword } = req.body

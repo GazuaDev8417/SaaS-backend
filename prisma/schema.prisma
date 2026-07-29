@@ -43,11 +43,31 @@ model Customer {
 }
 
 model Order {
-  id         Int      @id @default(autoincrement())
-  product    String
-  total      Float
-  status     String
-  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  customerId Int
-  createdAt  DateTime @default(now())
+  id            Int      @id @default(autoincrement())
+  product       String
+  total         Float
+  status        String
+  customer      Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId    Int
+  customerName  String
+  createdAt     DateTime @default(now())
+}
+
+model Revenue {
+  id        Int      @id @default(autoincrement())
+  month     String   
+  revenue   Int   
+  orders    Int
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   
+  value     Int
+}
+
+model Statistics {
+  id        Int      @id @default(autoincrement())
+  title     String   
+  value     Int
 }

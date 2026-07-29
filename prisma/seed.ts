@@ -10,9 +10,12 @@ async function main(){
     await prisma.customer.deleteMany()
     await prisma.product.deleteMany()
     await prisma.user.deleteMany()
+    await prisma.revenue.deleteMany()
+    await prisma.category.deleteMany()
 
     const rawPassword = 'password123'
     const hashedPassword = bcrypt.hashSync(rawPassword.trim(), 10)
+    
     await prisma.user.create({
         data: {
             name: "Flamarion França",
@@ -40,11 +43,41 @@ async function main(){
     const customer2 = await prisma.customer.create({
         data: { name: "Emma Wilson", email: "emma@example.com", phone: "+1 (555) 987-6543", status: "Active" },
     })
+    const customer3 = await prisma.customer.create({
+        data: { name: "Michael Brown", email: "michael@example.com", phone: "+1 (555) 786-4477", status: "Active" },
+    })
+    const customer4 = await prisma.customer.create({
+        data: { name: "Sophia Davis", email: "sophia@example.com", phone: "+1 (555) 772-3399", status: "Active" },
+    })
 
     await prisma.order.createMany({
         data: [
-            { product: "Premium Plan", total: 120, status: "completed", customerId: customer1.id },
-            { product: "Starter Plan", total: 49, status: "pending", customerId: customer2.id },
+            { product: "Premium Plan", total: 120, status: "completed", customerId: customer1.id, customerName: customer1.name },
+            { product: "Starter Plan", total: 49, status: "pending", customerId: customer2.id, customerName: customer2.name },
+            { product: "Premium Plan", total: 120, status: "completed", customerId: customer3.id, customerName: customer3.name },
+            { product: "Starter Plan", total: 49, status: "pending", customerId: customer4.id, customerName: customer4.name },
+            { product: "Business Plan", total: 299, status: "completed", customerId: customer1.id, customerName: customer1.name },
+            { product: "Enterprise Plan", total: 599, status: "pending", customerId: customer2.id, customerName: customer2.name },
+        ]
+    })
+
+    await prisma.revenue.createMany({
+        data: [
+            { month: "Jan", revenue: 4000, orders: 240 },
+            { month: "Feb", revenue: 3000, orders: 198 },
+            { month: "Mar", revenue: 5000, orders: 300 },
+            { month: "Apr", revenue: 2780, orders: 190 },
+            { month: "May", revenue: 1890, orders: 120 },
+            { month: "Jun", revenue: 2390, orders: 170 }
+        ]
+    })
+
+    await prisma.category.createMany({
+        data: [
+            { name: "Electronics", value: 40 },
+            { name: "Accessories", value: 25 },
+            { name: "Software", value: 20 },
+            { name: "Services", value: 15 }
         ]
     })
 

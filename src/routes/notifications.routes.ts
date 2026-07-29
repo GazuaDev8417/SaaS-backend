@@ -4,7 +4,8 @@ import { authenticateToken } from "../middleware/auth.js"
 
 const router = Router()
 
-router.use(authenticateToken)
 
 
+router.get('/notifications', (req, res)=>{
 
+})

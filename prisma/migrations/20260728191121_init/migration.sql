@@ -48,9 +48,38 @@ CREATE TABLE "Order" (
     "total" DOUBLE PRECISION NOT NULL,
     "status" TEXT NOT NULL,
     "customerId" INTEGER NOT NULL,
+    "customerName" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Revenue" (
+    "id" SERIAL NOT NULL,
+    "month" TEXT NOT NULL,
+    "revenue" INTEGER NOT NULL,
+    "orders" INTEGER NOT NULL,
+
+    CONSTRAINT "Revenue_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Category" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "value" INTEGER NOT NULL,
+
+    CONSTRAINT "Category_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Statistics" (
+    "id" SERIAL NOT NULL,
+    "title" TEXT NOT NULL,
+    "value" INTEGER NOT NULL,
+
+    CONSTRAINT "Statistics_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
