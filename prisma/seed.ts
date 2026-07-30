@@ -52,12 +52,12 @@ async function main(){
 
     await prisma.order.createMany({
         data: [
-            { product: "Premium Plan", total: 120, status: "completed", customerId: customer1.id, customerName: customer1.name },
-            { product: "Starter Plan", total: 49, status: "pending", customerId: customer2.id, customerName: customer2.name },
-            { product: "Premium Plan", total: 120, status: "completed", customerId: customer3.id, customerName: customer3.name },
-            { product: "Starter Plan", total: 49, status: "pending", customerId: customer4.id, customerName: customer4.name },
-            { product: "Business Plan", total: 299, status: "completed", customerId: customer1.id, customerName: customer1.name },
-            { product: "Enterprise Plan", total: 599, status: "pending", customerId: customer2.id, customerName: customer2.name },
+            { product: "Premium Plan", total: 120, status: "Completed", customerId: customer1.id, customerName: customer1.name },
+            { product: "Starter Plan", total: 49, status: "Pending", customerId: customer2.id, customerName: customer2.name },
+            { product: "Premium Plan", total: 120, status: "Completed", customerId: customer3.id, customerName: customer3.name },
+            { product: "Starter Plan", total: 49, status: "Pending", customerId: customer4.id, customerName: customer4.name },
+            { product: "Business Plan", total: 299, status: "Completed", customerId: customer1.id, customerName: customer1.name },
+            { product: "Enterprise Plan", total: 599, status: "Pending", customerId: customer2.id, customerName: customer2.name },
         ]
     })
 
