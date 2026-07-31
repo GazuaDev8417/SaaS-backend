@@ -24,15 +24,16 @@ router.get('/', async(req, res)=>{
         })
         res.json(products)
     }catch(e){
+        console.log(e)
         res.status(500).json({ message: 'Failed to fetch products' })
     }
 })
 
 router.post('/', async(req, res)=>{
     try{
-        const { name, category, price, stock } = req.body
+        const { name, category, description, price, stock } = req.body
         
-        if (!name || !category || price === undefined || stock === undefined) {
+        if (!name || !category || !description || price === undefined || stock === undefined) {
             return res.status(400).json({ message: "Missing required fields" })
         }
 
@@ -41,6 +42,7 @@ router.post('/', async(req, res)=>{
             data: {
                 name,
                 category,
+                description,
                 price: Number(price),
                 stock: Number(stock),
                 status,

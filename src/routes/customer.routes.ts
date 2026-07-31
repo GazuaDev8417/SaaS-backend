@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { prisma } from "../lib/prisma.js"
+import { prisma, deliveryPrisma } from "../lib/prisma.js"
 import { authenticateToken } from "../middleware/auth.js"
 
 const router = Router()
@@ -17,6 +17,7 @@ router.get("/", async (req, res) => {
 
     res.json(customers)
   } catch (error) {
+    console.error(error)
     res.status(500).json({ message: "Failed to fetch customers" })
   }
 })
@@ -30,7 +31,7 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ message: "Name and email are required fields" })
     }
 
-    const customer = await prisma.customer.create({
+    await prisma.customer.create({
       data: {
         name,
         email,
@@ -39,7 +40,7 @@ router.post("/", async (req, res) => {
       },
     })
 
-    res.status(201).json(customer)
+    res.status(201).json({ messageÇ: 'Customer created' })
   } catch (error) {
     res.status(500).json({ message: "Failed to create customer" })
   }

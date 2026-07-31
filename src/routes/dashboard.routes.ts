@@ -1,4 +1,5 @@
 import { Router } from "express"
+import { prisma } from "../lib/prisma.js"
 import { authenticateToken } from "../middleware/auth.js"
 
 
@@ -10,13 +11,13 @@ router.use(authenticateToken)
 
 
 router.get('/statistics', async(req, res)=>{
-    const statistics = [
-        { title: 'Revenue', value: '$4, 500' },
-        { title: 'Customer', value: '1,245' },
-        { title: 'Orders', value: '325' },
-        { title: 'Products', value: '98' }
-    ]
-    res.json(statistics)
+    try{
+        const statistics = await prisma.statistics.findMany()
+
+        res.json(statistics)
+    }catch(e){
+        res.status(500).json({ message: 'Failed to fetch statistics' })
+    }
 })
 
 

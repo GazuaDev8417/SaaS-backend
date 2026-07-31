@@ -12,6 +12,7 @@ async function main(){
     await prisma.user.deleteMany()
     await prisma.revenue.deleteMany()
     await prisma.category.deleteMany()
+    await prisma.statistics.deleteMany()
 
     const rawPassword = 'password123'
     const hashedPassword = bcrypt.hashSync(rawPassword.trim(), 10)
@@ -28,7 +29,7 @@ async function main(){
         }
     })
 
-    await prisma.product.createMany({
+    /* await prisma.product.createMany({
         data: [
             { name: "MacBook Pro", category: "Electronics", price: 2499, stock: 15, status: "Active" },
             { name: "iPhone 16", category: "Electronics", price: 999, stock: 42, status: "Active" },
@@ -80,6 +81,19 @@ async function main(){
             { name: "Services", value: 15 }
         ]
     })
+
+    const customersQuantity = await prisma.customer.count()
+    const ordersQuantity = await prisma.order.count()
+    const productsQuantity = await prisma.product.count()
+
+    await prisma.statistics.createMany({
+        data: [
+            { title: 'Revenue', value: 4500 },
+            { title: 'Customer', value: customersQuantity },
+            { title: 'Orders', value: ordersQuantity },
+            { title: 'Products', value: productsQuantity }
+        ]
+    }) */
 
     console.log('Seed completed successfully')
 }

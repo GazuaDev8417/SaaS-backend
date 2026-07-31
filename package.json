@@ -9,7 +9,10 @@
     "postinstall": "prisma generate",
     "dev": "tsx watch src/index.ts",
     "db:push": "prisma db push",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "prisma:pull:delivery": "prisma db pull --schema=./prisma_delivery/deliverySchema.prisma",
+    "prisma:push:delivery": "prisma db push --schema=./prisma_delivery/deliverySchema.prisma",
+    "prisma:generate:delivery": "prisma generate --schema=./prisma_delivery/deliverySchema.prisma"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
