@@ -11,7 +11,6 @@ router.use(authenticateToken)
 router.get("/", async (req, res) => {
   try {
     const customers = await prisma.customer.findMany({
-      include: { orders: true },
       orderBy: { createdAt: "desc" },
     })
 
@@ -52,9 +51,31 @@ router.put("/:id", async (req, res) => {
     const id = Number(req.params.id)
     const { name, email, phone, status } = req.body
 
+    const existingUser = await prisma.customer.findUnique({
+      where: { id }
+    })
+    
+    if(!existingUser){
+      return res.status(404).json({ message: 'Customer not found' })
+    }
+
+
+    const secondaryDBUser = await deliveryPrisma.customer.findUnique({
+      where: { email: existingUser.email}
+    })
+
+    if(!secondaryDBUser){
+      return res.status(404).json({ message: 'User from secondary database not found' })
+    }
+    
     const updatedCustomer = await prisma.customer.update({
       where: { id },
       data: { name, email, phone, status },
+    })
+
+    await deliveryPrisma.customer.update({
+      where: { id: secondaryDBUser.id },
+      data: { name, email, phone }
     })
 
     res.json(updatedCustomer)

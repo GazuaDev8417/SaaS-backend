@@ -1,5 +1,3 @@
-//REMEMBER YOU DIDN'T CREATE THE ROUTES BEFORE RUN NPX PRISMA DB SEED
-
 import { Router } from "express"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
@@ -28,18 +26,7 @@ router.post('/login', async(req, res)=>{
 
     const token = jwt.sign({ userId: user.id }, JWT_SECRET, {expiresIn: '7d'})
 
-    res.json({
-        token,
-        user: {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            emailNotifs: user.emailNotifs,
-            pushNotifs: user.pushNotifs,
-            marketingEmails: user.marketingEmails,
-        }
-    })
+    res.json(token)
 })
 
 
@@ -65,7 +52,7 @@ router.get('/me', authenticateToken, async(req:AuthRequest, res)=>{
 })
 
 
-router.put('/profile', authenticateToken, async(req:AuthRequest, res)=>{
+/* router.put('/profile', authenticateToken, async(req:AuthRequest, res)=>{
     if(!req.userId) return res.status(401).json({ message: 'Unauthoized'} )
 
     const { name, email, role } = req.body
@@ -92,7 +79,7 @@ router.put('/profile', authenticateToken, async(req:AuthRequest, res)=>{
        } 
        res.status(500).json({ message: 'Failed to update profile' })
     }
-})
+}) */
 
 
 router.put('/password', authenticateToken, async(req:AuthRequest, res)=>{

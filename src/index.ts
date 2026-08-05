@@ -18,13 +18,13 @@ const PORT = Number(process.env.PORT) || 5000
 
 app.use(express.json())
 
-app.use('/api/auth', authRoutes)
-app.use('/api/dashboard', dashboardRoutes)
-app.use('/api/products', productRoutes)
-app.use('/api/orders', orderRoutes)
-app.use('/api/customers', customerRoutes)
-app.use('/api/analytics', analyticsRoutes)
-app.use('/api/settings', settingsRoutes)
+app.use('/auth', authRoutes)
+app.use('/dashboard', dashboardRoutes)
+app.use('/products', productRoutes)
+app.use('/orders', orderRoutes)
+app.use('/customers', customerRoutes)
+app.use('/analytics', analyticsRoutes)
+app.use('/settings', settingsRoutes)
 
 app.get("/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date() })

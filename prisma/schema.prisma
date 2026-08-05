@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output = "../node_modules/@prisma/client-dashboard"
 }
 
 datasource db {
@@ -41,8 +42,8 @@ model product {
   description String
   category    String    @db.VarChar(30)
   price       Float
-  stock       Int
-  status      String    @db.VarChar(20)
+  stock       Int?
+  status      String?    @db.VarChar(20)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime?
 }
@@ -70,6 +71,6 @@ model user {
   pushNotifs                  Boolean  @default(false)
   marketingEmails             Boolean  @default(false)
   createdAt                   DateTime @default(now())
-  updatedAt                   DateTime
+  updatedAt                   DateTime @updatedAt
   default_password_identifier String?  @unique(map: "User_default_password_identifier_key") @db.VarChar(255)
 }

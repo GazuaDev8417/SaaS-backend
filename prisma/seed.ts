@@ -14,6 +14,7 @@ async function main(){
     await prisma.category.deleteMany()
     await prisma.statistics.deleteMany()
 
+    
     const rawPassword = 'password123'
     const hashedPassword = bcrypt.hashSync(rawPassword.trim(), 10)
     
@@ -26,15 +27,18 @@ async function main(){
             emailNotifs: true,
             pushNotifs: false,
             marketingEmails: false,
+            updatedAt: new Date()
         }
     })
 
-    /* await prisma.product.createMany({
+    await prisma.product.createMany({
         data: [
-            { name: "MacBook Pro", category: "Electronics", price: 2499, stock: 15, status: "Active" },
-            { name: "iPhone 16", category: "Electronics", price: 999, stock: 42, status: "Active" },
-            { name: "AirPods Pro", category: "Accessories", price: 249, stock: 6, status: "Low Stock" },
-            { name: "Magic Mouse", category: "Accessories", price: 99, stock: 0, status: "Inactive" },
+            { name: "Heineken", description: 'The famous Dutch pale lager with 100 % natural ingredients and its iconic green bottle', category: "Beer", price: 7.80, stock: 280, status: "Active" },
+            { name: "MacBook Pro", description: `It's a light body, clear golden color, and balanced taste with 330ml bottle size`, category: "Beer", price: 7.00, stock: 100, status: "Low Stock" },
+            { name: "Itaipava", description: `Light, refreshing, low-bitterness Pilsner with 4.5% ABV.`, category: "Beer", price: 3.50, stock: 150, status: "Active" },
+            { name: "Red Label", description: `The world's best-selling blended Scotch whisky, famous for its vibrant, bold, and spicy flavor profile`, category: "Whisky", price: 150, stock: 0, status: "Inactive" },
+            { name: "Churrasco", description: `Popular Brazilian snack made with cubed pieces of meat, chicken, or cheese`, category: "Snack", price: 32.00, stock: 100, status: "Low Stock" },
+            { name: "Picanha na brasa", description: `Grilled picanha is the most famous dish of the Brazilian barbecue, known for its thick fat cap, very tender meat, and bold flavor.`, category: "Snack", price: 80.00, stock: 180, status: "Active" },
         ]
     })
 
@@ -62,7 +66,7 @@ async function main(){
         ]
     })
 
-    await prisma.revenue.createMany({
+    /* await prisma.revenue.createMany({
         data: [
             { month: "Jan", revenue: 4000, orders: 240 },
             { month: "Feb", revenue: 3000, orders: 198 },
@@ -93,7 +97,7 @@ async function main(){
             { title: 'Orders', value: ordersQuantity },
             { title: 'Products', value: productsQuantity }
         ]
-    }) */
+    })*/
 
     console.log('Seed completed successfully')
 }

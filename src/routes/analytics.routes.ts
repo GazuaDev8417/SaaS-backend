@@ -10,9 +10,22 @@ router.use(authenticateToken)
 
 router.get('/revenue', async(req, res)=>{
     try {
-        const revenueOverview = await prisma.revenue.findMany()
+        const [totalCustomers, totalOrder, totalProducts, orderRevenue] = await Promise.all([
+            prisma.customer.count(),
+            prisma.order.count(),
+            prisma.product.count(),
+            prisma.order.aggregate({
+                _sum: { total: true }
+            }),
+        ])
+        const totalRevenue = orderRevenue._sum.total ?? 0
 
-        res.json(revenueOverview)
+        return [
+            { title: 'Revenue', value: Number(totalRevenue) },
+            { title: 'Customer', value: totalCustomers },
+            { title: 'Orders', value: totalOrder },
+            { title: 'Products', value: totalProducts },
+        ]
     } catch (error) {
         res.status(500).json({ message: "Failed to fetch revenue data" })
     }
